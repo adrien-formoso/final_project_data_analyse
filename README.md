@@ -2,17 +2,30 @@
 
 Ce projet applique le processus KDD (Knowledge Discovery in Databases) à un jeu de données multidimensionnel de qualité de l'air pour Séoul, afin d'en extraire des indicateurs et de les restituer dans un tableau de bord interactif.
 
+## Projet académique
+
+**École :** ESILV 
+**Formation :** MSDS 1
+**Matière :** Data Analysis 
+**Projet :** Projet final (KDD & Dashboarding)  
+**Professeur :**   ALATRISTA SALAS Hugo
+**Année universitaire :** 2025-2026
+
 ## Équipe
 
 - Emma Coco
 - Uliana Chernysheva
 - Adrien Formoso
 - Joss Develter
-- Ibrahim 
+- Ibrahim Alkardo
+
+## Lien vers le Repo GitHub
+
+https://github.com/adrien-formoso/final_project_data_analyse 
 
 ## Description du projet
 
-Le notebook `main.ipynb` charge, nettoie et explore le jeu de données de pollution de l'air de Séoul, l'enrichit avec des données météorologiques externes, puis calcule une série d'indicateurs (clustering du niveau de risque, agrégations par station, tendance temporelle, analyse spatio-temporelle, corrélations entre polluants). Tous ces résultats sont ensuite affichés dans un dashboard interactif construit avec Dash et Plotly.
+Le notebook `main.ipynb` charge, nettoie et explore le jeu de données de pollution de l'air de Séoul, l'enrichit avec des données météorologiques externes, puis calcule une série d'indicateurs (clustering du niveau de risque, agrégations par station, tendance temporelle, analyse spatio-temporelle et corrélations entre variables météorologiques et polluants). Tous ces résultats sont ensuite affichés dans un dashboard interactif construit avec Dash et Plotly.
 
 ## Jeux de données
 
@@ -30,8 +43,10 @@ Mesures horaires de qualité de l'air, avec une dimension temporelle (date et he
 
 ### Données météo de Séoul (enrichissement, point bonus)
 
-- `temperature.csv` / `temperature.parquet` : historique météo agrégé (température, humidité, précipitations, vent, etc.) utilisé pour enrichir les indicateurs de pollution.
-- `seoul_2016-01-01_to_2018-01-01.csv` et `seoul_2018-01-01_to_2020-01-01.csv` : exports météo bruts par période, concaténés pour produire le fichier `temperature.parquet`.
+- `temperature.parquet` : historique météorologique de Séoul (température, humidité, précipitations, vent, etc.) utilisé pour enrichir le dataset principal.
+- `seoul_2016-01-01_to_2018-01-01.csv` et `seoul_2018-01-01_to_2020-01-01.csv` : exports météorologiques bruts concaténés pour produire le fichier `temperature.parquet`.
+
+Les données météorologiques sont fusionnées au dataset principal via la date de mesure. Les variables température (`temp`) et humidité (`humidity`) sont ensuite utilisées pour étudier les relations entre conditions météorologiques et niveaux de pollution atmosphérique à travers une analyse de corrélation.
 
 ## Structure du dépôt
 
@@ -62,7 +77,7 @@ pip install pandas numpy plotly dash dash-bootstrap-components scikit-learn pyar
 
 ## Utilisation
 
-1. Vérifier que `polution.csv` se trouve dans le même dossier que le notebook (le notebook le référence sous le nom `data.csv` dans le bloc `__main__` : adapter le chemin si nécessaire).
+1. Vérifier que `polution.csv` et `temperature.parquet` se trouvent dans le même dossier que le notebook.
 2. Lancer Jupyter et exécuter toutes les cellules de `main.ipynb` :
 
 ```bash
@@ -80,7 +95,7 @@ jupyter notebook main.ipynb
    - **Regroupement** (`analyze_pollution_by_station`) : moyenne des polluants par station.
    - **Analyse temporelle** (`temporal_analysis`) : moyenne journalière des PM10.
    - **Analyse spatio-temporelle** (`spatio_temporal_analysis`) : moyenne des polluants par coordonnées GPS et par jour, utilisée pour la carte animée.
-   - **Corrélations** : matrice de corrélation entre polluants.
+   - **Corrélations météo-pollution** : matrice de corrélation entre température, humidité et concentrations des principaux polluants afin d'étudier l'influence des conditions météorologiques sur la qualité de l'air.
 4. **Visualisation** (`run_interactive_dashboard`) : dashboard Dash regroupant carte spatio-temporelle animée, graphique en barres par station, série temporelle, heatmap de corrélation, boxplot et diagramme circulaire des niveaux de risque.
 
 ## Dashboard
@@ -90,6 +105,6 @@ Le tableau de bord présente :
 - une carte interactive animée (polluant sélectionnable via menu déroulant) ;
 - un graphique en barres de la moyenne des PM10 par station ;
 - une courbe d'évolution journalière des PM10 ;
-- une heatmap des corrélations entre polluants ;
+- une heatmap des corrélations entre variables météorologiques (température, humidité) et polluants ;
 - un boxplot de la distribution des PM2.5 par niveau de risque ;
 - un diagramme circulaire de répartition des niveaux de risque.
