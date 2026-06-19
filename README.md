@@ -91,7 +91,7 @@ jupyter notebook main.ipynb
 1. **Chargement et exploration** (`load_and_explore_data`) : lecture du CSV, affichage des dimensions, types, valeurs manquantes et plages de valeurs.
 2. **Enrichissement** (`enrich_with_weather`, `concat_historical_temp`) : fusion des données de pollution avec les données météo externes, par date.
 3. **Construction des indicateurs** :
-   - **Clustering K-Means** (`apply_kmeans_clustering`) : segmentation en 3 niveaux de risque (Faible / Modéré / Élevé) à partir des concentrations combinées de polluants.
+   - **Clustering K-Means** (`apply_kmeans_clustering`) : segmentation non supervisée des mesures en 3 groupes présentant des caractéristiques de pollution similaires, à partir des concentrations combinées de SO2, NO2, O3, CO, PM10 et PM2.5.
    - **Regroupement** (`analyze_pollution_by_station`) : moyenne des polluants par station.
    - **Analyse temporelle** (`temporal_analysis`) : moyenne journalière des PM10.
    - **Analyse spatio-temporelle** (`spatio_temporal_analysis`) : moyenne des polluants par coordonnées GPS et par jour, utilisée pour la carte animée.
